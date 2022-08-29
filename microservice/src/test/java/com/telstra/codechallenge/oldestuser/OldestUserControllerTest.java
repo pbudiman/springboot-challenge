@@ -2,11 +2,13 @@ package com.telstra.codechallenge.oldestuser;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import static org.mockito.Mockito.when;
+
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -20,22 +22,23 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-@WebMvcTest(controllers = OldestUserController.class)
+@SpringBootTest
 public class OldestUserControllerTest {
+
+
+
+    @InjectMocks
+    private OldestUserController oldestUserController;
+
+    @Mock
+    private OldestUserService oldestUserService;
 
     @Autowired
     private MockMvc mvc;
 
-    @MockBean
-    private OldestUserService oldestUserService;
-
-    @InjectMocks
-    private OldestUserController oldestUserController= new OldestUserController(oldestUserService);
-
-//    @Before
+//    @BeforeEach
 //    public void setUp(){
 //        mvc = MockMvcBuilders.standaloneSetup(oldestUserController).build();
 //    }
@@ -43,23 +46,23 @@ public class OldestUserControllerTest {
     @Test
     public void getUserList_returnOldestUserList() throws Exception {
 
-        OldestUser.User user1= new OldestUser.User(1,"test","test1");
-        OldestUser.User user2= new OldestUser.User(2,"test2","test2");
-        Integer total_count=2;
-        Boolean incomplete_result=false;
+        OldestUser.User user1= new OldestUser.User();
+        OldestUser.User user2= new OldestUser.User();
+        user1.setId(1);user1.setLogin("user1");user1.setHtml_url("user1");
+        user2.setId(2);user2.setLogin("user2");user2.setHtml_url("user2");
+        OldestUser oldestUsers =  new OldestUser();
+        oldestUsers.setTotal_count(2);oldestUsers.setIncomplete_result(false);oldestUsers.setItems(Arrays.asList(user1,user2));
 
-        OldestUser oldestUsers =  new OldestUser(total_count,incomplete_result, Arrays.asList(user1,user2));
-
+        oldestUserService = Mockito.mock(OldestUserService.class, Mockito.RETURNS_DEEP_STUBS);
         when(oldestUserService.getOldestUser(2)).thenReturn(oldestUsers);
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get("/user/2").accept(MediaType.APPLICATION_JSON);
 
-        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+        mvc.perform(get("/user/2").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
 
 
-//        MockHttpServletResponse response = mvc.perform(get("/user/2").accept(MediaType.APPLICATION_JSON)).andReturn().getResponse();
-
-        System.out.println(mvcResult.getResponse());
 
     }
+
+
+
 
 }

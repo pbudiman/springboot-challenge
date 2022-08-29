@@ -10,8 +10,6 @@ import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
-@Getter
-@Setter
 public class OldestUser {
 
     private Integer total_count;
@@ -24,13 +22,5 @@ public class OldestUser {
         private Integer id;
         private String login;
         private String html_url;
-
     }
-
-//    public Long getTotalCount(){
-//        return total_count;
-//    }
-//    public List<User> getUsers(){
-//        return items;
-//    }
 }

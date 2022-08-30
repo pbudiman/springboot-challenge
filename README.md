@@ -9,7 +9,7 @@ Execute the main method in com.telstra.codechallenge.MicroServiceMain class from
 ## Endpoint
 
 `/user/{accountNumber}` <br/>
-where accountNumber sets the number of accounts to return.
+where accountNumber sets the number of oldest user accounts with zero followers to return.
 
 ## To Run Test
 Run `mvn test` or go to `microservice/src/test` and execute each tests manually.

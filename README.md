@@ -1,7 +1,8 @@
 # Spring Boot Coding Exercise Attempt
  
 This is the attempt of this coding exercide Q2. Find the oldest user accounts with zero followers. <br/>
-Code base are from https://bitbucket.org/c967784/spring-boot-coding-exercise/src/master/
+Changes are made in `package com.telstra.codechallenge.oldestUser` <br/>
+Code base are from https://bitbucket.org/c967784/spring-boot-coding-exercise/src/master/<br/>
 
 ## How to Run Project
 Execute the main method in com.telstra.codechallenge.MicroServiceMain class from your IDE <br/> or go to `microservice` and run `mvn spring-boot:run`
